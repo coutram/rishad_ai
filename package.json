@@ -13,7 +13,8 @@
     "local:chat": "node src/chatbot.js",
     "local:train": "node src/training.js",
     "local:scrape": "node src/substack-scraper.js",
-    "test": "echo 'No tests specified'"
+    "test": "echo 'No tests specified'",
+    "test:streaming": "node test-streaming.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",

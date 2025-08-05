@@ -564,6 +564,34 @@
                 opacity: 1;
             }
         }
+
+        /* Streaming Text Effect */
+        .message-text.streaming::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Smooth typing animation */
+        .message-text {
+            transition: all 0.1s ease;
+        }
+
+        /* Enhanced streaming message styling */
+        .message.bot .message-text {
+            position: relative;
+        }
+
+        .message.bot .message-text.streaming {
+            background: linear-gradient(90deg, #f8fafc 0%, #ffffff 100%);
+            border-left: 3px solid #3b82f6;
+        }
     </style>
 </head>
 <body>
@@ -789,36 +817,93 @@
             // Show typing indicator
             showTypingIndicator();
 
-            // Send to API
-            fetch(`${API_BASE}/chat`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    message,
-                    context: conversationHistory
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                hideTypingIndicator();
-                
-                if (data.response) {
-                    addMessage(data.response, 'bot');
-                    // Add to conversation history
-                    conversationHistory.push(
-                        { role: 'user', content: message },
-                        { role: 'assistant', content: data.response }
-                    );
-                } else {
-                    addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+            // Send to API with streaming
+            sendStreamingMessage(message);
+        }
+
+        async function sendStreamingMessage(message) {
+            try {
+                const response = await fetch(`${API_BASE}/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        message,
+                        context: conversationHistory,
+                        stream: true
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            })
-            .catch(error => {
+
+                // Hide typing indicator
+                hideTypingIndicator();
+
+                // Create a new message container for the streaming response
+                const messagesContainer = document.getElementById('chat-messages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message bot';
+                messageDiv.id = 'streaming-message';
+                
+                const now = new Date();
+                const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">R</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-author">Rishad AI</span>
+                            <span class="message-time">${timeString}</span>
+                        </div>
+                        <div class="message-text streaming" id="streaming-text"></div>
+                    </div>
+                `;
+                
+                messagesContainer.appendChild(messageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                // Get the text container for streaming
+                const textContainer = document.getElementById('streaming-text');
+                let fullResponse = '';
+
+                // Read the streaming response
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value, { stream: true });
+                    fullResponse += chunk;
+                    
+                    // Update the text container with the new content
+                    textContainer.textContent = fullResponse;
+                    
+                    // Scroll to bottom to follow the typing
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    
+                    // Small delay to make typing effect more visible
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                }
+
+                // Remove the streaming ID and class, add to conversation history
+                messageDiv.removeAttribute('id');
+                textContainer.classList.remove('streaming');
+                conversationHistory.push(
+                    { role: 'user', content: message },
+                    { role: 'assistant', content: fullResponse }
+                );
+
+            } catch (error) {
+                console.error('Streaming error:', error);
                 hideTypingIndicator();
                 addMessage('Sorry, I\'m having trouble connecting. Please check if the server is running.', 'bot');
-            });
+            }
         }
 
         function addMessage(text, sender) {

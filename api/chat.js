@@ -30,11 +30,126 @@ export default async function handler(req, res) {
     // Validate required fields
     if (!validateFields(req, res, ['message'])) return;
 
-    const { message, context = [] } = req.body;
-    const response = await processMessage(message, context);
-    res.json({ response });
+    const { message, context = [], stream = false } = req.body;
+    
+    // Check if streaming is requested
+    if (stream) {
+      await handleStreamingResponse(message, context, res);
+    } else {
+      const response = await processMessage(message, context);
+      res.json({ response });
+    }
   } catch (error) {
     handleError(res, error, 'Chat');
+  }
+}
+
+async function handleStreamingResponse(message, context, res) {
+  try {
+    // Check if OpenAI is configured
+    if (!isOpenAIConfigured()) {
+      const demoResponse = generateDemoResponse('chat');
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Transfer-Encoding': 'chunked',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+      });
+      
+      // Stream the demo response character by character
+      for (let i = 0; i < demoResponse.length; i++) {
+        res.write(demoResponse[i]);
+        await new Promise(resolve => setTimeout(resolve, 50)); // 50ms delay between characters
+      }
+      res.end();
+      return;
+    }
+
+    // Determine intent
+    const intent = determineIntent(message);
+    let responseText = '';
+    
+    switch (intent) {
+      case 'analyze':
+        responseText = await handleAnalysisRequest(message);
+        break;
+      case 'transform':
+        responseText = await handleTransformRequest(message);
+        break;
+      case 'insights':
+        responseText = await handleInsightsRequest(message);
+        break;
+      case 'train':
+        responseText = await handleTrainingRequest(message);
+        break;
+      default:
+        responseText = await handleGeneralChatStreaming(message, context, res);
+        return; // handleGeneralChatStreaming handles its own streaming
+    }
+
+    // Stream the response
+    res.writeHead(200, {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Transfer-Encoding': 'chunked',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive'
+    });
+    
+    // Stream the response character by character
+    for (let i = 0; i < responseText.length; i++) {
+      res.write(responseText[i]);
+      await new Promise(resolve => setTimeout(resolve, 30)); // 30ms delay between characters
+    }
+    res.end();
+    
+  } catch (error) {
+    console.error('Streaming error:', error);
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end('Error: Unable to process request');
+  }
+}
+
+async function handleGeneralChatStreaming(message, context, res) {
+  try {
+    const openai = getOpenAI();
+    const systemPrompt = getRishadSystemPrompt();
+
+    const messages = [
+      { role: 'system', content: systemPrompt },
+      ...context,
+      { role: 'user', content: message }
+    ];
+
+    // Set up streaming response headers
+    res.writeHead(200, {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Transfer-Encoding': 'chunked',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive'
+    });
+
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4',
+      messages: messages,
+      max_tokens: 500,
+      temperature: 0.7,
+      stream: true,
+    });
+
+    for await (const chunk of completion) {
+      const content = chunk.choices[0]?.delta?.content;
+      if (content) {
+        res.write(content);
+        // Small delay to make typing effect more natural
+        await new Promise(resolve => setTimeout(resolve, 20));
+      }
+    }
+    
+    res.end();
+  } catch (error) {
+    console.error('Streaming chat completion error:', error);
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end('Error: Unable to process request');
   }
 }
 
