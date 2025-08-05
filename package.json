@@ -1,14 +1,19 @@
 {
-  "name": "rishad-ai-mcp",
+  "name": "rishad-ai",
   "version": "1.0.0",
-  "description": "MCP server for analyzing content and applying Rishad Tobaccowala's writing style",
-  "main": "src/server.js",
+  "description": "AI assistant trained on Rishad Tobaccowala's writing style and insights",
+  "main": "api/chat.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "chat": "node src/chatbot.js",
-    "train": "node src/training.js"
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "vercel dev",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "local:chat": "node src/chatbot.js",
+    "local:train": "node src/training.js",
+    "local:scrape": "node src/substack-scraper.js",
+    "test": "echo 'No tests specified'"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
@@ -21,16 +26,30 @@
     "openai": "^4.20.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "vercel": "^32.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": [
-    "mcp",
     "ai",
-    "writing",
-    "style",
-    "rishad",
-    "tobaccowala"
+    "chatbot",
+    "rishad-tobaccowala",
+    "writing-style",
+    "vercel",
+    "serverless",
+    "openai",
+    "gpt-4"
   ],
-  "author": "Your Name",
-  "license": "MIT"
+  "author": "Rishad AI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/rishad-ai.git"
+  },
+  "homepage": "https://rishad-ai.vercel.app",
+  "bugs": {
+    "url": "https://github.com/yourusername/rishad-ai/issues"
+  }
 }
