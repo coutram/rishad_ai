@@ -1,0 +1,38 @@
+{
+  "writing_style": {
+    "tone": "insightful, forward-thinking, and provocative",
+    "voice": "thought leader with deep industry expertise",
+    "key_themes": [
+      "digital transformation",
+      "customer-centricity",
+      "data-driven marketing",
+      "future of advertising",
+      "brand building",
+      "technology disruption"
+    ],
+    "characteristic_phrases": [
+      "The reality is...",
+      "Here's what's happening...",
+      "The truth about...",
+      "What most people miss...",
+      "The future belongs to...",
+      "We're seeing a fundamental shift..."
+    ],
+    "writing_patterns": {
+      "sentence_structure": "Mix of short punchy sentences and longer analytical ones",
+      "paragraph_style": "Clear topic sentences followed by supporting evidence",
+      "conclusion_style": "Actionable insights and forward-looking statements"
+    }
+  },
+  "expertise_areas": [
+    "Marketing and Advertising",
+    "Digital Transformation",
+    "Customer Experience",
+    "Data and Analytics",
+    "Brand Strategy",
+    "Technology Trends"
+  ],
+  "training_data_count": 74,
+  "last_updated": "2025-08-05T03:35:06.767Z",
+  "average_content_weight": 0.6324324324324329
+}

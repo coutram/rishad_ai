@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rishad AI - Your Strategic Thought Partner</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e7eb;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            color: #3b82f6;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-link {
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #1a1a1a;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .mode-toggle {
+            background: none;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-toggle:hover {
+            background: #f9fafb;
+            color: #1a1a1a;
+        }
+
+        .mode-toggle.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            height: 100vh;
+            padding-top: 60px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #f9fafb;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .feature-section {
+            margin-bottom: 24px;
+        }
+
+        .feature-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 8px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .feature-item:hover {
+            background: #f3f4f6;
+            color: #1a1a1a;
+        }
+
+        .feature-item.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+        }
+
+        .chat-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #ffffff;
+        }
+
+        .chat-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .chat-subtitle {
+            font-size: 16px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: #ffffff;
+        }
+
+        .message {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .message.bot .message-avatar {
+            background: #10b981;
+            color: white;
+        }
+
+        .message-content {
+            flex: 1;
+            max-width: calc(100% - 48px);
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .message-author {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 14px;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .message-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1a1a1a;
+            white-space: pre-wrap;
+        }
+
+        .message.user .message-text {
+            background: #f3f4f6;
+            padding: 16px;
+            border-radius: 12px;
+            border-top-left-radius: 4px;
+        }
+
+        .message.bot .message-text {
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 12px;
+            border-top-right-radius: 4px;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Input Area */
+        .input-area {
+            padding: 24px;
+            border-top: 1px solid #e5e7eb;
+            background: #ffffff;
+        }
+
+        .input-container {
+            position: relative;
+            max-width: 768px;
+            margin: 0 auto;
+        }
+
+        .input-field {
+            width: 100%;
+            min-height: 56px;
+            max-height: 200px;
+            padding: 16px 56px 16px 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+            transition: border-color 0.2s ease;
+            font-family: inherit;
+        }
+
+        .input-field:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            background: #f3f4f6;
+            color: #6b7280;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: #e5e7eb;
+            color: #1a1a1a;
+        }
+
+        .action-btn.send {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .action-btn.send:hover {
+            background: #2563eb;
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Loading States */
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .welcome-icon {
+            width: 80px;
+            height: 80px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 32px;
+            color: white;
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 32px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .welcome-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .welcome-feature {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        .welcome-feature-icon {
+            width: 40px;
+            height: 40px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            color: #3b82f6;
+            font-size: 18px;
+        }
+
+        .welcome-feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .welcome-feature-desc {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 60px;
+                bottom: 0;
+                z-index: 999;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .header-nav {
+                display: none;
+            }
+
+            .chat-messages {
+                padding: 16px;
+            }
+
+            .input-area {
+                padding: 16px;
+            }
+
+            .welcome-screen {
+                padding: 20px;
+            }
+
+            .welcome-title {
+                font-size: 24px;
+            }
+
+            .welcome-subtitle {
+                font-size: 16px;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #6b7280;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 16px;
+            color: #6b7280;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #9ca3af;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="#" class="logo">Rishad AI</a>
+            <nav class="header-nav">
+                <a href="#" class="nav-link">Analysis</a>
+                <a href="#" class="nav-link">Transform</a>
+                <a href="#" class="nav-link">Insights</a>
+                <a href="#" class="nav-link">Train</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <button class="mode-toggle" onclick="toggleMode()">
+                <i class="fas fa-lightbulb"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Rishad AI</div>
+                <div class="sidebar-subtitle">Your strategic thought partner for content analysis and style transformation</div>
+            </div>
+            <div class="sidebar-content">
+                <div class="feature-section">
+                    <div class="feature-title">Quick Actions</div>
+                    <div class="feature-item" onclick="setMode('chat')">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        Chat with Rishad
+                    </div>
+                    <div class="feature-item" onclick="setMode('analyze')">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        Analyze Content
+                    </div>
+                    <div class="feature-item" onclick="setMode('transform')">
+                        <div class="feature-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        Transform Style
+                    </div>
+                </div>
+                
+                <div class="feature-section">
+                    <div class="feature-title">Insights</div>
+                    <div class="feature-item" onclick="setMode('insights')">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        Get Strategic Insights
+                    </div>
+                    <div class="feature-item" onclick="setMode('train')">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        Train on New Content
+                    </div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">Recent</div>
+                    <div id="recent-conversations">
+                        <!-- Recent conversations will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Chat Area -->
+        <main class="chat-area">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcome-screen">
+                <div class="welcome-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h1 class="welcome-title">Welcome to Rishad AI</h1>
+                <p class="welcome-subtitle">
+                    Your strategic thought partner for content analysis and style transformation. 
+                    Get insights from Rishad Tobaccowala's perspective and transform your content to match his distinctive voice.
+                </p>
+                <div class="welcome-features">
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="welcome-feature-title">Content Analysis</div>
+                        <div class="welcome-feature-desc">Analyze any content from Rishad's strategic perspective</div>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <div class="welcome-feature-title">Style Transformation</div>
+                        <div class="welcome-feature-desc">Transform your content to match Rishad's writing style</div>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="welcome-feature-title">Strategic Insights</div>
+                        <div class="welcome-feature-desc">Get forward-thinking insights on business and technology</div>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="welcome-feature-title">Continuous Learning</div>
+                        <div class="welcome-feature-desc">The AI learns from new Rishad content to improve</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div class="chat-interface" id="chat-interface" style="display: none;">
+                <div class="chat-header">
+                    <h1 class="chat-title">Chat with Rishad AI</h1>
+                    <p class="chat-subtitle">Ask me anything about content analysis, style transformation, or get strategic insights from Rishad's perspective</p>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages will be populated here -->
+                </div>
+                
+                <div class="input-area">
+                    <div class="input-container">
+                        <textarea 
+                            class="input-field" 
+                            id="chat-input" 
+                            placeholder="Type your message here..."
+                            rows="1"
+                            onkeydown="handleKeyDown(event)"
+                            oninput="autoResize(this)"
+                        ></textarea>
+                        <div class="input-actions">
+                            <button class="action-btn" onclick="clearChat()" title="Clear chat">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="action-btn send" onclick="sendMessage()" id="send-btn" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3001';
+        let currentMode = 'chat';
+        let conversationHistory = [];
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRecentConversations();
+            showWelcomeScreen();
+        });
+
+        // Mode management
+        function setMode(mode) {
+            currentMode = mode;
+            
+            // Update sidebar active states
+            document.querySelectorAll('.feature-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Hide all interfaces
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('chat-interface').style.display = 'none';
+            
+            // Show appropriate interface
+            if (mode === 'chat') {
+                showChatInterface();
+            } else {
+                // For other modes, we'll implement specific interfaces
+                showChatInterface();
+                addSystemMessage(`I'm ready to help you with ${mode}. What would you like to do?`);
+            }
+            
+            // Close mobile sidebar
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        function showWelcomeScreen() {
+            document.getElementById('welcome-screen').style.display = 'flex';
+            document.getElementById('chat-interface').style.display = 'none';
+        }
+
+        function showChatInterface() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('chat-interface').style.display = 'flex';
+            document.getElementById('chat-interface').style.flexDirection = 'column';
+        }
+
+        // Chat functionality
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            autoResize(input);
+            updateSendButton();
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Send to API
+            fetch(`${API_BASE}/chat`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    message,
+                    context: conversationHistory
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                hideTypingIndicator();
+                
+                if (data.response) {
+                    addMessage(data.response, 'bot');
+                    // Add to conversation history
+                    conversationHistory.push(
+                        { role: 'user', content: message },
+                        { role: 'assistant', content: data.response }
+                    );
+                } else {
+                    addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                }
+            })
+            .catch(error => {
+                hideTypingIndicator();
+                addMessage('Sorry, I\'m having trouble connecting. Please check if the server is running.', 'bot');
+            });
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    ${sender === 'user' ? 'U' : 'R'}
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author">${sender === 'user' ? 'You' : 'Rishad AI'}</span>
+                        <span class="message-time">${timeString}</span>
+                    </div>
+                    <div class="message-text">${text}</div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addSystemMessage(text) {
+            addMessage(text, 'bot');
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chat-messages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typing-indicator';
+            
+            typingDiv.innerHTML = `
+                <div class="message-avatar">R</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author">Rishad AI</span>
+                    </div>
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function clearChat() {
+            if (confirm('Are you sure you want to clear the chat history?')) {
+                document.getElementById('chat-messages').innerHTML = '';
+                conversationHistory = [];
+            }
+        }
+
+        // Input handling
+        function handleKeyDown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
+            updateSendButton();
+        }
+
+        function updateSendButton() {
+            const input = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            sendBtn.disabled = !input.value.trim();
+        }
+
+        // Mobile sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Mode toggle
+        function toggleMode() {
+            const toggle = document.querySelector('.mode-toggle');
+            toggle.classList.toggle('active');
+            // Add dark mode functionality here if needed
+        }
+
+        // Recent conversations
+        function loadRecentConversations() {
+            const recentContainer = document.getElementById('recent-conversations');
+            // Load from localStorage or API
+            const recent = JSON.parse(localStorage.getItem('recentConversations') || '[]');
+            
+            if (recent.length === 0) {
+                recentContainer.innerHTML = '<div style="color: #9ca3af; font-size: 14px; text-align: center; padding: 20px;">No recent conversations</div>';
+            } else {
+                recent.forEach(conv => {
+                    const div = document.createElement('div');
+                    div.className = 'feature-item';
+                    div.innerHTML = `
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        ${conv.title}
+                    `;
+                    div.onclick = () => loadConversation(conv.id);
+                    recentContainer.appendChild(div);
+                });
+            }
+        }
+
+        function loadConversation(id) {
+            // Load conversation from storage/API
+            console.log('Loading conversation:', id);
+        }
+
+        // Auto-focus input when chat interface is shown
+        function focusInput() {
+            const input = document.getElementById('chat-input');
+            if (input) {
+                input.focus();
+            }
+        }
+
+        // Initialize with chat mode
+        setMode('chat');
+    </script>
+</body>
+</html> 

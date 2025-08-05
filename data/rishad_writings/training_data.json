@@ -1,0 +1,345 @@
+[
+  {
+    "content": "",
+    "source": "file: 2022-01-09_the-garden-inside.txt",
+    "weight": 0.5,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:05.517Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2022-02-06_4-keys-to-leading-today.txt",
+    "weight": 0.5,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:16.812Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2022-03-06_think-like-an-immigrant.txt",
+    "weight": 0.5,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:17.748Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2022-04-03_re-invented-marketing-5-shifts.txt",
+    "weight": 0.5,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:28.008Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2022-05-01_forever-young.txt",
+    "weight": 0.5,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:29.390Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-01-15_strategy.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:30.894Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-02-12_future-proofing-ourselves.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:40.277Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-03-12_creativity-in-an-age-of-ai.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:49.685Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-05-07_the-rethinking-work-show.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:30:50.927Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-06-04_ruptures-in-the-mediascape-what-next.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:31:01.833Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-07-02_the-future-fits-on-one-page.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:31:13.431Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-08-06_the-decline-of-jobs-the-rise-of-work.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:31:14.621Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-09-03_6-ways-to-lead-today.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:31:15.809Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-10-01_strategy-and-the-perils-of-implementation.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:31:16.948Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-11-05_chances-changes-choices.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:31:17.744Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2023-12-03_exit.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:31:18.762Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-03-23_re-invented-marketing-5-shifts.txt",
+    "weight": 0.8,
+    "edition": 241,
+    "timestamp": "2025-08-05T03:31:27.234Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-03-30_think-like-an-immigrant.txt",
+    "weight": 0.8,
+    "edition": 242,
+    "timestamp": "2025-08-05T03:31:37.561Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-04-06_4-keys-to-leading-today.txt",
+    "weight": 0.8,
+    "edition": 243,
+    "timestamp": "2025-08-05T03:31:38.570Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-04-13_the-garden-inside.txt",
+    "weight": 0.8,
+    "edition": 244,
+    "timestamp": "2025-08-05T03:31:48.480Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-04-20_exit.txt",
+    "weight": 0.8,
+    "edition": 245,
+    "timestamp": "2025-08-05T03:31:56.748Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-04-27_chances-changes-choices.txt",
+    "weight": 0.8,
+    "edition": 246,
+    "timestamp": "2025-08-05T03:32:10.573Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-05-04_strategy-and-the-perils-of-implementation.txt",
+    "weight": 0.8,
+    "edition": 247,
+    "timestamp": "2025-08-05T03:32:12.182Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-05-11_6-ways-to-lead-today.txt",
+    "weight": 0.8,
+    "edition": 248,
+    "timestamp": "2025-08-05T03:32:21.630Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-05-18_the-decline-of-jobs-the-rise-of-work.txt",
+    "weight": 0.8,
+    "edition": 249,
+    "timestamp": "2025-08-05T03:32:22.611Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-05-25_the-future-fits-on-one-page.txt",
+    "weight": 0.8,
+    "edition": 250,
+    "timestamp": "2025-08-05T03:32:34.286Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-06-01_ruptures-in-the-mediascape-what-next.txt",
+    "weight": 0.8,
+    "edition": 251,
+    "timestamp": "2025-08-05T03:32:43.222Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-06-08_the-rethinking-work-show.txt",
+    "weight": 0.8,
+    "edition": 252,
+    "timestamp": "2025-08-05T03:32:59.893Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-06-15_trust-integrity.txt",
+    "weight": 0.8,
+    "edition": 253,
+    "timestamp": "2025-08-05T03:33:01.448Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-06-22_creativity-in-an-age-of-ai.txt",
+    "weight": 0.8,
+    "edition": 254,
+    "timestamp": "2025-08-05T03:33:02.383Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-06-29_forever-young.txt",
+    "weight": 0.8,
+    "edition": 255,
+    "timestamp": "2025-08-05T03:33:10.387Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-07-06_-human-in-an-ai-age-roots-wings.txt",
+    "weight": 1,
+    "edition": 256,
+    "timestamp": "2025-08-05T03:33:17.750Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-07-13_human-in-an-ai-age-voice.txt",
+    "weight": 1,
+    "edition": 257,
+    "timestamp": "2025-08-05T03:33:20.108Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-07-20_human-in-an-ai-age-grace.txt",
+    "weight": 1,
+    "edition": 258,
+    "timestamp": "2025-08-05T03:33:21.801Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-07-27_future-of-work-less-and-more.txt",
+    "weight": 1,
+    "edition": 259,
+    "timestamp": "2025-08-05T03:33:34.519Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-03_managing-careers.txt",
+    "weight": 1,
+    "edition": 260,
+    "timestamp": "2025-08-05T03:33:35.795Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_creativity-in-an-age-of-ai.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:33:43.538Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_forever-young.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:33:44.899Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_future-of-work-less-and-more.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:33:55.081Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_human-in-an-ai-age-grace.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:05.139Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_human-in-an-ai-age-roots-amp-wings.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:06.867Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_human-in-an-ai-age-voice.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:17.930Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_managing-careers.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:31.042Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_ruptures-in-the-mediascape-what-next.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:32.411Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_the-decline-of-jobs-the-rise-of-work.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:34.412Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_the-future-fits-on-one-page.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:41.574Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_the-rethinking-work-show.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:50.898Z"
+  },
+  {
+    "content": "",
+    "source": "file: 2025-08-05_trust-amp-integrity.txt",
+    "weight": 0.6,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:51.832Z"
+  },
+  {
+    "content": "# Rishad's blog posts and articles\n\nPlace rishad's blog posts and articles in this folder.\n\nSupported formats:\n- .txt (plain text)\n- .md (markdown)\n- .json (structured data)\n\nEach file should contain content from Rishad Tobaccowala that you want the AI to learn from.",
+    "source": "file: README.md",
+    "weight": 1,
+    "edition": null,
+    "timestamp": "2025-08-05T03:34:54.130Z"
+  }
+]

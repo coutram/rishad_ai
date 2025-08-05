@@ -1,0 +1,10 @@
+# Rishad's Twitter/X posts
+
+Place rishad's twitter/x posts in this folder.
+
+Supported formats:
+- .txt (plain text)
+- .md (markdown)
+- .json (structured data)
+
+Each file should contain content from Rishad Tobaccowala that you want the AI to learn from.
