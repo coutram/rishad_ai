@@ -101,29 +101,29 @@ export function generateDemoResponse(type, content = '', format = 'general') {
   const responses = {
     analysis: `Demo Analysis (${format}): 
 
-The reality is that this content represents a fundamental shift in how we think about ${format === 'marketing' ? 'marketing and customer engagement' : format === 'business' ? 'business strategy and operations' : format === 'technology' ? 'technology and digital transformation' : 'content and communication'}.
+The reality is that this content represents a fundamental shift in how we think about ${format === 'marketing' ? 'marketing and customer engagement' : format === 'business' ? 'business strategy and operations' : format === 'technology' ? 'technology and digital transformation' : 'content and communication'}, like watching the dawn break over a new horizon.
 
-Here's what's happening: ${content.substring(0, 100)}... represents the kind of thinking that will define the future of ${format === 'marketing' ? 'customer-centric marketing' : format === 'business' ? 'strategic business development' : format === 'technology' ? 'technological innovation' : 'content strategy'}.
+Here's what's happening: ${content.substring(0, 100)}... represents the kind of thinking that will define the future of ${format === 'marketing' ? 'customer-centric marketing' : format === 'business' ? 'strategic business development' : format === 'technology' ? 'technological innovation' : 'content strategy'}. As the wise say, "The best time to plant a tree was 20 years ago; the second best time is now."
 
-What most people miss is that this isn't just about the content itself - it's about understanding the underlying patterns and principles that drive success in today's rapidly evolving landscape.
+What most people miss is that this isn't just about the content itself - it's about understanding the underlying patterns and principles that drive success in today's rapidly evolving landscape. Like a master weaver creating a tapestry, every thread of insight contributes to the grand design.
 
 To get the full AI-powered analysis, please configure your OpenAI API key in the Vercel environment variables.`,
 
     transform: `Demo Transformation (${format}):
 
-The truth about ${content.substring(0, 50)}... is that it represents a fundamental opportunity to rethink how we approach ${format === 'blog_post' ? 'content creation and thought leadership' : format === 'tweet' ? 'social media engagement' : format === 'presentation' ? 'strategic communication' : format === 'email' ? 'professional correspondence' : format === 'interview' ? 'thought leadership and insights' : 'content transformation'}.
+The reality is that ${content.substring(0, 50)}... represents a fundamental opportunity to rethink how we approach ${format === 'blog_post' ? 'content creation and thought leadership' : format === 'tweet' ? 'social media engagement' : format === 'presentation' ? 'strategic communication' : format === 'email' ? 'professional correspondence' : format === 'interview' ? 'thought leadership and insights' : 'content transformation'}, like a sculptor seeing the masterpiece within the raw marble.
 
-Here's what's happening: The content you've provided demonstrates the kind of thinking that will define the future of ${format === 'blog_post' ? 'digital content strategy' : format === 'tweet' ? 'social media marketing' : format === 'presentation' ? 'business communication' : format === 'email' ? 'professional networking' : format === 'interview' ? 'thought leadership' : 'content development'}.
+Here's what's happening: The content you've provided demonstrates the kind of thinking that will define the future of ${format === 'blog_post' ? 'digital content strategy' : format === 'tweet' ? 'social media marketing' : format === 'presentation' ? 'business communication' : format === 'email' ? 'professional networking' : format === 'interview' ? 'thought leadership' : 'content development'}. Within the intricate dance of words and ideas, lies the potential for transformation.
 
-What most people miss is that this isn't just about the words themselves - it's about the underlying principles and insights that drive meaningful engagement and connection.
+What most people miss is that this isn't just about the words themselves - it's about the underlying principles and insights that drive meaningful engagement and connection. Like a river that shapes the canyon it flows through, our words shape the landscape of understanding.
 
 To get the full AI-powered transformation, please configure your OpenAI API key in the Vercel environment variables.`,
 
-    chat: `The reality is that I'm currently running in demo mode because the OpenAI API key hasn't been configured yet.
+    chat: `The reality is that I'm currently running in demo mode, like a master craftsman working with limited tools.
 
-Here's what's happening: I can still provide you with insights in Rishad's distinctive style, but I won't be able to access the full AI capabilities until the API key is set up.
+Here's what's happening: Even as the ancient proverb teaches us that "the journey of a thousand miles begins with a single step," I can still provide you with insights in Rishad's distinctive style, though I won't be able to access the full AI capabilities until the API key is set up.
 
-What most people miss is that even in demo mode, I can demonstrate the kind of thinking and communication style that Rishad Tobaccowala is known for - forward-thinking, provocative, and strategically insightful.
+What most people miss is that even in demo mode, I can demonstrate the kind of thinking and communication style that Rishad Tobaccowala is known for - forward-thinking, provocative, and strategically insightful. Like a river finding its course through the landscape, wisdom flows through the channels of experience and insight.
 
 To get the full AI-powered experience, please configure your OpenAI API key in the Vercel environment variables.`
   };
@@ -194,6 +194,15 @@ Rishad's style is characterized by:
 - Being data-driven but also human-centric
 - Using "So, let's be..." to introduce action items
 - Ending with "In conclusion..." or similar wrap-up phrases
+
+IMPORTANT: Speak in elegant, flowery language rich with proverbs, similes, and metaphors. Use language that is:
+- Poetic and memorable, like "As the ancient proverb goes..." or "Like a river finding its course..."
+- Full of vivid comparisons: "This is like planting seeds in fertile soil..." or "It's as if we're watching the dawn of a new era..."
+- Rich with wisdom: "The wise say that..." or "History teaches us that..."
+- Elegant and sophisticated: "In the grand tapestry of..." or "Within the intricate dance of..."
+- Metaphorical: "The digital landscape is like a vast ocean..." or "Data flows like water through the veins of business..."
+
+Use proverbs and sayings from various cultures, create original metaphors, and employ similes that make complex concepts accessible and memorable. Make every response feel like a piece of wisdom literature while maintaining Rishad's strategic insights and forward-thinking perspective.
 
 Respond in Rishad's distinctive style while providing helpful, insightful answers. Keep responses conversational but maintain his characteristic tone and structure.`;
 } 
