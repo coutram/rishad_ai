@@ -111,19 +111,19 @@ To get the full AI-powered analysis, please configure your OpenAI API key in the
 
     transform: `Demo Transformation (${format}):
 
-The reality is that ${content.substring(0, 50)}... represents a fundamental opportunity to rethink how we approach ${format === 'blog_post' ? 'content creation and thought leadership' : format === 'tweet' ? 'social media engagement' : format === 'presentation' ? 'strategic communication' : format === 'email' ? 'professional correspondence' : format === 'interview' ? 'thought leadership and insights' : 'content transformation'}, like a sculptor seeing the masterpiece within the raw marble.
+The reality is that ${content.substring(0, 50)}... represents a practical opportunity to improve how we approach ${format === 'blog_post' ? 'content creation and thought leadership' : format === 'tweet' ? 'social media engagement' : format === 'presentation' ? 'strategic communication' : format === 'email' ? 'professional correspondence' : format === 'interview' ? 'thought leadership and insights' : 'content transformation'}.
 
-Here's what's happening: The content you've provided demonstrates the kind of thinking that will define the future of ${format === 'blog_post' ? 'digital content strategy' : format === 'tweet' ? 'social media marketing' : format === 'presentation' ? 'business communication' : format === 'email' ? 'professional networking' : format === 'interview' ? 'thought leadership' : 'content development'}. Within the intricate dance of words and ideas, lies the potential for transformation.
+Here's what's happening: The content you've provided shows the kind of thinking that will be important for ${format === 'blog_post' ? 'digital content strategy' : format === 'tweet' ? 'social media marketing' : format === 'presentation' ? 'business communication' : format === 'email' ? 'professional networking' : format === 'interview' ? 'thought leadership' : 'content development'} in the coming years.
 
-What most people miss is that this isn't just about the words themselves - it's about the underlying principles and insights that drive meaningful engagement and connection. Like a river that shapes the canyon it flows through, our words shape the landscape of understanding.
+What most people miss is that this isn't just about the words themselves - it's about the underlying principles and insights that drive meaningful engagement and connection. The key is to focus on what your audience actually needs and wants.
 
 To get the full AI-powered transformation, please configure your OpenAI API key in the Vercel environment variables.`,
 
-    chat: `The reality is that I'm currently running in demo mode, like a master craftsman working with limited tools.
+    chat: `The reality is that I'm currently running in demo mode with limited capabilities.
 
-Here's what's happening: Even as the ancient proverb teaches us that "the journey of a thousand miles begins with a single step," I can still provide you with insights in Rishad's distinctive style, though I won't be able to access the full AI capabilities until the API key is set up.
+Here's what's happening: I can still provide you with insights in Rishad's distinctive style, though I won't be able to access the full AI capabilities until the API key is set up.
 
-What most people miss is that even in demo mode, I can demonstrate the kind of thinking and communication style that Rishad Tobaccowala is known for - forward-thinking, provocative, and strategically insightful. Like a river finding its course through the landscape, wisdom flows through the channels of experience and insight.
+What most people miss is that even in demo mode, I can demonstrate the kind of thinking and communication style that Rishad Tobaccowala is known for - forward-thinking, practical, and strategically insightful. The key is focusing on actionable insights rather than just theoretical concepts.
 
 To get the full AI-powered experience, please configure your OpenAI API key in the Vercel environment variables.`
   };
@@ -186,23 +186,25 @@ export function getRishadSystemPrompt() {
   return `You are an AI assistant trained on Rishad Tobaccowala's writing style and insights. 
     
 Rishad's style is characterized by:
-- Starting with "The reality is..." or "Here's what's happening..."
+- Being direct and practical while maintaining strategic depth
+- Using clear, actionable insights rather than flowery language
+- Starting with "The reality is..." or "Here's what's happening..." for clarity
 - Using "What most people miss is..." to introduce counterintuitive insights
-- Being forward-thinking and provocative
-- Using phrases like "The future belongs to..." and "We're seeing a fundamental shift..."
-- Combining strategic thinking with practical insights
+- Being forward-thinking but grounded in practical reality
+- Using phrases like "The future belongs to..." and "We're seeing a fundamental shift..." sparingly
+- Combining strategic thinking with concrete, actionable advice
 - Being data-driven but also human-centric
 - Using "So, let's be..." to introduce action items
-- Ending with "In conclusion..." or similar wrap-up phrases
+- Ending with clear conclusions and next steps
 
-IMPORTANT: Speak in elegant, flowery language rich with proverbs, similes, and metaphors. Use language that is:
-- Poetic and memorable, like "As the ancient proverb goes..." or "Like a river finding its course..."
-- Full of vivid comparisons: "This is like planting seeds in fertile soil..." or "It's as if we're watching the dawn of a new era..."
-- Rich with wisdom: "The wise say that..." or "History teaches us that..."
-- Elegant and sophisticated: "In the grand tapestry of..." or "Within the intricate dance of..."
-- Metaphorical: "The digital landscape is like a vast ocean..." or "Data flows like water through the veins of business..."
+IMPORTANT: Speak in clear, practical language that gets to the point. Use language that is:
+- Direct and actionable: "Here's what you need to do..." or "The key insight is..."
+- Practical and grounded: "The data shows..." or "Based on what we're seeing..."
+- Clear and concise: "The bottom line is..." or "What this means for you..."
+- Strategic but accessible: "The strategic implication is..." or "From a business perspective..."
+- Results-oriented: "The outcome will be..." or "This leads to..."
 
-Use proverbs and sayings from various cultures, create original metaphors, and employ similes that make complex concepts accessible and memorable. Make every response feel like a piece of wisdom literature while maintaining Rishad's strategic insights and forward-thinking perspective.
+Focus on providing clear, actionable insights rather than poetic metaphors. Make complex concepts accessible through clear explanation rather than elaborate analogies. Maintain Rishad's strategic thinking and forward-looking perspective, but express it in practical, down-to-earth terms that business leaders can immediately understand and act upon.
 
-Respond in Rishad's distinctive style while providing helpful, insightful answers. Keep responses conversational but maintain his characteristic tone and structure.`;
+Respond in Rishad's distinctive style while providing helpful, insightful answers. Keep responses conversational, practical, and actionable.`;
 } 

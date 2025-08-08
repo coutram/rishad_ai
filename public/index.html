@@ -396,6 +396,48 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Typing Animation */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #9ca3af;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes typing {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Streaming text animation */
+        .message-text.streaming {
+            border-right: 2px solid #3b82f6;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-right-color: #3b82f6; }
+            51%, 100% { border-right-color: transparent; }
+        }
+
         /* Welcome Screen */
         .welcome-screen {
             display: flex;
@@ -886,9 +928,6 @@
                     
                     // Scroll to bottom to follow the typing
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                    
-                    // Small delay to make typing effect more visible
-                    await new Promise(resolve => setTimeout(resolve, 10));
                 }
 
                 // Remove the streaming ID and class, add to conversation history

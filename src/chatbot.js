@@ -38,10 +38,15 @@ class RishadAIChatbot {
     // Main chat endpoint
     this.app.post('/chat', async (req, res) => {
       try {
-        const { message, context = [] } = req.body;
+        const { message, context = [], stream = false } = req.body;
         
         if (!message) {
           return res.status(400).json({ error: 'Message is required' });
+        }
+
+        // Check if streaming is requested
+        if (stream) {
+          return this.handleStreamingChat(req, res, message, context);
         }
 
         const response = await this.processMessage(message, context);
@@ -328,7 +333,7 @@ You can:
 3. Provide insights on topics from his viewpoint
 4. Learn from new Rishad content
 
-Keep responses conversational and helpful. If the user wants to analyze, transform, or get insights, guide them on how to do so.`;
+Keep responses conversational, practical, and actionable. Focus on clear, direct insights rather than flowery language. If the user wants to analyze, transform, or get insights, guide them on how to do so.`;
 
     const messages = [
       { role: 'system', content: systemPrompt },
@@ -409,6 +414,75 @@ Keep responses conversational and helpful. If the user wants to analyze, transfo
 🎓 **Learn**: I can learn from new Rishad content. Use "train on this content: [content]" or "learn from this: [content]"
 
 Just tell me what you'd like to do!`;
+  }
+
+  async handleStreamingChat(req, res, message, context) {
+    try {
+      // Set headers for streaming
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Transfer-Encoding': 'chunked',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+      });
+
+      // Check if OpenAI API key is configured
+      if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'your_openai_api_key_here') {
+        const demoResponse = `The reality is that I'm currently running in demo mode with limited capabilities.
+
+Here's what's happening: I can still provide you with insights in Rishad's distinctive style, though I won't be able to access the full AI capabilities until the API key is set up.
+
+What most people miss is that even in demo mode, I can demonstrate the kind of thinking and communication style that Rishad Tobaccowala is known for - forward-thinking, practical, and strategically insightful. The key is focusing on actionable insights rather than just theoretical concepts.
+
+To get the full AI-powered experience, please configure your OpenAI API key in the .env file.`;
+
+        // Stream the demo response character by character
+        for (let i = 0; i < demoResponse.length; i++) {
+          res.write(demoResponse[i]);
+          await new Promise(resolve => setTimeout(resolve, 30)); // 30ms delay between characters
+        }
+        res.end();
+        return;
+      }
+
+      // Use OpenAI streaming for real responses
+      const systemPrompt = `You are a helpful assistant that can analyze content and provide insights in the style of Rishad Tobaccowala, a legendary advertising and marketing thought leader. 
+
+You can:
+1. Analyze content from Rishad's perspective
+2. Transform content to match his writing style
+3. Provide insights on topics from his viewpoint
+4. Learn from new Rishad content
+
+Keep responses conversational, practical, and actionable. Focus on clear, direct insights rather than flowery language. If the user wants to analyze, transform, or get insights, guide them on how to do so.`;
+
+      const messages = [
+        { role: 'system', content: systemPrompt },
+        ...context,
+        { role: 'user', content: message }
+      ];
+
+      const stream = await this.openai.chat.completions.create({
+        model: process.env.OPENAI_MODEL || 'gpt-4',
+        messages,
+        temperature: 0.7,
+        max_tokens: 1000,
+        stream: true
+      });
+
+      for await (const chunk of stream) {
+        const content = chunk.choices[0]?.delta?.content;
+        if (content) {
+          res.write(content);
+        }
+      }
+
+      res.end();
+    } catch (error) {
+      console.error('Streaming chat error:', error);
+      res.write('Sorry, I\'m having trouble connecting. Please check your API key and try again.');
+      res.end();
+    }
   }
 
   start() {
