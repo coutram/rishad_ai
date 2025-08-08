@@ -5,6 +5,7 @@ import { RishadStyleAnalyzer } from './rishad-analyzer.js';
 import { StyleTransformer } from './style-transformer.js';
 import { ContentAnalyzer } from './content-analyzer.js';
 import { StrategicPrimitivesAnalyzer } from './strategic-primitives.js';
+import { HighPriorityTrainer } from './high-priority-trainer.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -20,6 +21,7 @@ class RishadAIChatbot {
     this.transformer = new StyleTransformer();
     this.contentAnalyzer = new ContentAnalyzer();
     this.strategicPrimitives = new StrategicPrimitivesAnalyzer();
+    this.highPriorityTrainer = new HighPriorityTrainer();
     
     this.setupMiddleware();
     this.setupRoutes();
@@ -143,6 +145,24 @@ To get the full AI-powered transformation, please configure your OpenAI API key 
       } catch (error) {
         console.error('Insights error:', error);
         res.status(500).json({ error: 'Internal server error' });
+      }
+    });
+
+    // High-priority training endpoint
+    this.app.post('/train-high-priority', async (req, res) => {
+      try {
+        console.log('Starting high-priority training...');
+        const trainingData = await this.highPriorityTrainer.trainOnHighPriorityContent();
+        
+        res.json({ 
+          success: true, 
+          message: 'High-priority training completed successfully',
+          content_chunks: trainingData.length,
+          sources: ['Re-Thinking Work Manuscript']
+        });
+      } catch (error) {
+        console.error('High-priority training error:', error);
+        res.status(500).json({ error: 'Training failed', details: error.message });
       }
     });
 
@@ -335,11 +355,28 @@ You can:
 3. Provide insights on topics from his viewpoint
 4. Learn from new Rishad content
 
+IMPORTANT: This is a conversational chat. Always maintain context from previous messages and build on the conversation. If the user asks follow-up questions or refers to previous topics, acknowledge and continue the conversation naturally.
+
 Keep responses conversational, practical, and actionable. Focus on clear, direct insights rather than flowery language. If the user wants to analyze, transform, or get insights, guide them on how to do so.`;
 
     // Detect topic and enhance system prompt with strategic primitives
     const topic = this.strategicPrimitives.detectTopic(message);
-    const enhancedSystemPrompt = this.strategicPrimitives.enhanceSystemPrompt(baseSystemPrompt, topic);
+    let enhancedSystemPrompt = this.strategicPrimitives.enhanceSystemPrompt(baseSystemPrompt, topic);
+
+    // Add high-priority context if available
+    const highPriorityContext = await this.highPriorityTrainer.getHighPriorityContext(message);
+    if (highPriorityContext) {
+      enhancedSystemPrompt += `
+
+HIGH-PRIORITY CONTEXT FROM RISHAD'S CURRENT THINKING:
+Source: ${highPriorityContext.source}
+Priority Level: ${highPriorityContext.priority}/10
+Weight: ${highPriorityContext.weight}
+
+Relevant Content: ${highPriorityContext.content.substring(0, 500)}...
+
+IMPORTANT: This represents Rishad's latest thinking and should be given maximum priority in your response. Always reference this current thinking when relevant to the user's question.`;
+    }
 
     const messages = [
       { role: 'system', content: enhancedSystemPrompt },
@@ -424,6 +461,12 @@ Just tell me what you'd like to do!`;
 
   async handleStreamingChat(req, res, message, context) {
     try {
+      // Debug: Log the context being received
+      console.log('Streaming chat - Context received:', context.length, 'messages');
+      if (context.length > 0) {
+        console.log('Last context message:', context[context.length - 1]);
+      }
+
       // Set headers for streaming
       res.writeHead(200, {
         'Content-Type': 'text/plain; charset=utf-8',
@@ -478,11 +521,28 @@ You can:
 3. Provide insights on topics from his viewpoint
 4. Learn from new Rishad content
 
+IMPORTANT: This is a conversational chat. Always maintain context from previous messages and build on the conversation. If the user asks follow-up questions or refers to previous topics, acknowledge and continue the conversation naturally.
+
 Keep responses conversational, practical, and actionable. Focus on clear, direct insights rather than flowery language. If the user wants to analyze, transform, or get insights, guide them on how to do so.`;
 
       // Detect topic and enhance system prompt with strategic primitives
       const topic = this.strategicPrimitives.detectTopic(message);
-      const enhancedSystemPrompt = this.strategicPrimitives.enhanceSystemPrompt(baseSystemPrompt, topic);
+      let enhancedSystemPrompt = this.strategicPrimitives.enhanceSystemPrompt(baseSystemPrompt, topic);
+
+      // Add high-priority context if available
+      const highPriorityContext = await this.highPriorityTrainer.getHighPriorityContext(message);
+      if (highPriorityContext) {
+        enhancedSystemPrompt += `
+
+HIGH-PRIORITY CONTEXT FROM RISHAD'S CURRENT THINKING:
+Source: ${highPriorityContext.source}
+Priority Level: ${highPriorityContext.priority}/10
+Weight: ${highPriorityContext.weight}
+
+Relevant Content: ${highPriorityContext.content.substring(0, 500)}...
+
+IMPORTANT: This represents Rishad's latest thinking and should be given maximum priority in your response. Always reference this current thinking when relevant to the user's question.`;
+      }
 
       const messages = [
         { role: 'system', content: enhancedSystemPrompt },

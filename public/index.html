@@ -191,12 +191,21 @@
             display: flex;
             flex-direction: column;
             background: #ffffff;
+            height: calc(100vh - 60px); /* Account for header */
+            overflow: hidden; /* Prevent double scrollbars */
         }
 
         .chat-header {
             padding: 20px 24px;
             border-bottom: 1px solid #e5e7eb;
             background: #ffffff;
+        }
+
+        .chat-interface {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
         }
 
         .chat-title {
@@ -219,6 +228,27 @@
             background: #ffffff;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+            min-height: 0; /* Important for flexbox scrolling */
+            height: 0; /* Force flex item to take remaining space */
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
         .message {
@@ -309,6 +339,7 @@
             padding: 24px;
             border-top: 1px solid #e5e7eb;
             background: #ffffff;
+            flex-shrink: 0; /* Prevent input area from shrinking */
         }
 
         .input-container {
@@ -814,10 +845,84 @@
         let currentMode = 'chat';
         let conversationHistory = [];
 
+        // Ensure conversation history is properly formatted for the API
+        function formatConversationHistory() {
+            return conversationHistory.map(msg => ({
+                role: msg.role,
+                content: msg.content
+            }));
+        }
+
+        // Improved scrolling function
+        function scrollToBottom(container, delay = 0) {
+            setTimeout(() => {
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                    // Force a reflow to ensure scrolling happens
+                    container.offsetHeight;
+                }
+            }, delay);
+        }
+
+        // Force scroll to bottom with multiple attempts
+        function forceScrollToBottom(container) {
+            if (!container) {
+                console.log('Scroll: Container not found');
+                return;
+            }
+            
+            console.log('Scroll: Attempting to scroll to bottom');
+            console.log('Scroll: Container height:', container.scrollHeight);
+            console.log('Scroll: Current scroll position:', container.scrollTop);
+            
+            // Immediate scroll
+            container.scrollTop = container.scrollHeight;
+            
+            // Force a reflow and try again
+            container.offsetHeight;
+            container.scrollTop = container.scrollHeight;
+            
+            // Multiple delayed attempts to ensure scrolling
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+                console.log('Scroll: 50ms attempt - New position:', container.scrollTop);
+            }, 50);
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+                console.log('Scroll: 100ms attempt - New position:', container.scrollTop);
+            }, 100);
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+                console.log('Scroll: 200ms attempt - New position:', container.scrollTop);
+            }, 200);
+            
+            // Additional attempts with longer delays
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+                console.log('Scroll: 500ms attempt - New position:', container.scrollTop);
+            }, 500);
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+                console.log('Scroll: 1000ms attempt - New position:', container.scrollTop);
+            }, 1000);
+        }
+
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             loadRecentConversations();
             showWelcomeScreen();
+            
+            // Initialize chat container scrolling
+            const messagesContainer = document.getElementById('chat-messages');
+            if (messagesContainer) {
+                // Ensure initial scroll position
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Add scroll event listener for debugging
+                messagesContainer.addEventListener('scroll', function() {
+                    // Optional: Add scroll debugging here if needed
+                });
+            }
         });
 
         // Mode management
@@ -888,7 +993,7 @@
                     },
                     body: JSON.stringify({ 
                         message,
-                        context: conversationHistory,
+                        context: formatConversationHistory(),
                         stream: true
                     })
                 });
@@ -900,11 +1005,15 @@
                 // Hide typing indicator
                 hideTypingIndicator();
 
+                // Create unique IDs for this streaming message
+                const messageId = 'streaming-message-' + Date.now();
+                const textId = 'streaming-text-' + Date.now();
+
                 // Create a new message container for the streaming response
                 const messagesContainer = document.getElementById('chat-messages');
                 const messageDiv = document.createElement('div');
                 messageDiv.className = 'message bot';
-                messageDiv.id = 'streaming-message';
+                messageDiv.id = messageId;
                 
                 const now = new Date();
                 const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -916,15 +1025,18 @@
                             <span class="message-author">Rishad AI</span>
                             <span class="message-time">${timeString}</span>
                         </div>
-                        <div class="message-text streaming" id="streaming-text"></div>
+                        <div class="message-text streaming" id="${textId}"></div>
                     </div>
                 `;
                 
                 messagesContainer.appendChild(messageDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                console.log('Streaming: Message container added, height:', messagesContainer.scrollHeight);
+                
+                // Force scroll to bottom with improved function
+                forceScrollToBottom(messagesContainer);
 
-                // Get the text container for streaming
-                const textContainer = document.getElementById('streaming-text');
+                // Get the text container for streaming using the unique ID
+                const textContainer = document.getElementById(textId);
                 let fullResponse = '';
 
                 // Read the streaming response
@@ -950,23 +1062,25 @@
                         textContainer.innerHTML = fullResponse.replace(/\n/g, '<br>');
                         lastUpdate = now;
                         
-                        // Smooth scroll to bottom
-                        requestAnimationFrame(() => {
-                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                        });
+                        // Force scroll to bottom during streaming
+                        forceScrollToBottom(messagesContainer);
                     }
                 }
 
                 // Final update to ensure all content is displayed
                 textContainer.innerHTML = fullResponse.replace(/\n/g, '<br>');
 
-                // Remove the streaming ID and class, add to conversation history
-                messageDiv.removeAttribute('id');
+                // Remove the streaming class and add to conversation history
                 textContainer.classList.remove('streaming');
+                
+                // Add messages to conversation history
                 conversationHistory.push(
                     { role: 'user', content: message },
                     { role: 'assistant', content: fullResponse }
                 );
+                
+                // Final scroll to ensure we're at the bottom
+                forceScrollToBottom(messagesContainer);
 
             } catch (error) {
                 console.error('Streaming error:', error);
@@ -977,6 +1091,8 @@
 
         function addMessage(text, sender) {
             const messagesContainer = document.getElementById('chat-messages');
+            console.log('AddMessage: Container found:', !!messagesContainer);
+            
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}`;
             
@@ -997,7 +1113,15 @@
             `;
             
             messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            console.log('AddMessage: Message added, container height now:', messagesContainer.scrollHeight);
+            
+            // Add to conversation history if it's a user message
+            if (sender === 'user') {
+                conversationHistory.push({ role: 'user', content: text });
+            }
+            
+            // Force scroll to bottom with improved function
+            forceScrollToBottom(messagesContainer);
         }
 
         function addSystemMessage(text) {
@@ -1025,7 +1149,9 @@
             `;
             
             messagesContainer.appendChild(typingDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Force scroll to bottom for typing indicator
+            forceScrollToBottom(messagesContainer);
         }
 
         function hideTypingIndicator() {

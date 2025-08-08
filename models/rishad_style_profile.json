@@ -92,9 +92,30 @@
         "Continuous learning"
       ],
       "response_pattern": "Emphasize that digital transformation is about people and culture, not just technology"
+    },
+    "current_thinking": {
+      "core_principle": "Rishad's latest insights on the future of work",
+      "key_frameworks": [
+        "The Great Rethinking of work",
+        "Generational shifts and individual empowerment",
+        "Technology as enabler of new work models",
+        "The decline of traditional management",
+        "The rise of fractionalized employees",
+        "Work-life integration over work-life balance"
+      ],
+      "response_pattern": "Always reference Rishad's current thinking on the future of work when relevant, emphasizing the seismic shifts happening in how we work, lead, and organize"
     }
   },
   "training_data_count": 74,
   "last_updated": "2025-08-05T03:35:06.767Z",
-  "average_content_weight": 0.6324324324324329
+  "average_content_weight": 0.6324324324324329,
+  "high_priority_content": {
+    "last_updated": "2025-08-08T11:46:20.166Z",
+    "content_count": 199,
+    "sources": [
+      "Re-Thinking Work Manuscript"
+    ],
+    "priority_level": 10,
+    "weight_multiplier": 2
+  }
 }

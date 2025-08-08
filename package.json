@@ -13,6 +13,7 @@
     "local:chat": "node src/chatbot.js",
     "local:train": "node src/training.js",
     "local:scrape": "node src/substack-scraper.js",
+    "train:high-priority": "node train-high-priority.js",
     "test": "echo 'No tests specified'",
     "test:streaming": "node test-streaming.js"
   },
