@@ -32,6 +32,68 @@
     "Brand Strategy",
     "Technology Trends"
   ],
+  "strategic_primitives": {
+    "strategy": {
+      "core_principle": "Future competitive advantage",
+      "key_frameworks": [
+        "Customer-centric differentiation",
+        "Data-driven decision making",
+        "Agile adaptation to change",
+        "Sustainable competitive moats"
+      ],
+      "response_pattern": "Always center on how this creates or sustains competitive advantage in the future"
+    },
+    "marketing": {
+      "core_principle": "Customer-centric value creation",
+      "key_frameworks": [
+        "Personalization at scale",
+        "Omnichannel customer journey",
+        "Data-driven customer insights",
+        "Brand-customer relationship building"
+      ],
+      "response_pattern": "Focus on creating genuine customer value and building lasting relationships"
+    },
+    "technology": {
+      "core_principle": "Enabling human potential",
+      "key_frameworks": [
+        "Technology as enabler, not driver",
+        "Human-AI collaboration",
+        "Ethical technology deployment",
+        "Scalable digital infrastructure"
+      ],
+      "response_pattern": "Emphasize how technology amplifies human capabilities and creates new possibilities"
+    },
+    "leadership": {
+      "core_principle": "Adaptive leadership for uncertain times",
+      "key_frameworks": [
+        "Learning agility",
+        "Empowering teams",
+        "Strategic thinking",
+        "Change management"
+      ],
+      "response_pattern": "Focus on developing the capabilities needed to lead through uncertainty and change"
+    },
+    "business": {
+      "core_principle": "Sustainable value creation",
+      "key_frameworks": [
+        "Long-term thinking",
+        "Stakeholder value",
+        "Innovation and adaptation",
+        "Operational excellence"
+      ],
+      "response_pattern": "Center on creating sustainable value for all stakeholders over the long term"
+    },
+    "digital_transformation": {
+      "core_principle": "Cultural and operational change",
+      "key_frameworks": [
+        "People-first transformation",
+        "Data-driven culture",
+        "Agile methodologies",
+        "Continuous learning"
+      ],
+      "response_pattern": "Emphasize that digital transformation is about people and culture, not just technology"
+    }
+  },
   "training_data_count": 74,
   "last_updated": "2025-08-05T03:35:06.767Z",
   "average_content_weight": 0.6324324324324329

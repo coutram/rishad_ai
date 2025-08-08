@@ -4,6 +4,7 @@ import OpenAI from 'openai';
 import { RishadStyleAnalyzer } from './rishad-analyzer.js';
 import { StyleTransformer } from './style-transformer.js';
 import { ContentAnalyzer } from './content-analyzer.js';
+import { StrategicPrimitivesAnalyzer } from './strategic-primitives.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -18,6 +19,7 @@ class RishadAIChatbot {
     this.analyzer = new RishadStyleAnalyzer();
     this.transformer = new StyleTransformer();
     this.contentAnalyzer = new ContentAnalyzer();
+    this.strategicPrimitives = new StrategicPrimitivesAnalyzer();
     
     this.setupMiddleware();
     this.setupRoutes();
@@ -325,7 +327,7 @@ For now, I can help you understand what I can do:
 What would you like to know about these capabilities?`;
     }
 
-    const systemPrompt = `You are a helpful assistant that can analyze content and provide insights in the style of Rishad Tobaccowala, a legendary advertising and marketing thought leader. 
+    const baseSystemPrompt = `You are a helpful assistant that can analyze content and provide insights in the style of Rishad Tobaccowala, a legendary advertising and marketing thought leader. 
 
 You can:
 1. Analyze content from Rishad's perspective
@@ -335,8 +337,12 @@ You can:
 
 Keep responses conversational, practical, and actionable. Focus on clear, direct insights rather than flowery language. If the user wants to analyze, transform, or get insights, guide them on how to do so.`;
 
+    // Detect topic and enhance system prompt with strategic primitives
+    const topic = this.strategicPrimitives.detectTopic(message);
+    const enhancedSystemPrompt = this.strategicPrimitives.enhanceSystemPrompt(baseSystemPrompt, topic);
+
     const messages = [
-      { role: 'system', content: systemPrompt },
+      { role: 'system', content: enhancedSystemPrompt },
       ...context,
       { role: 'user', content: message }
     ];
@@ -426,15 +432,33 @@ Just tell me what you'd like to do!`;
         'Connection': 'keep-alive'
       });
 
-      // Check if OpenAI API key is configured
-      if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'your_openai_api_key_here') {
-        const demoResponse = `The reality is that I'm currently running in demo mode with limited capabilities.
+              // Check if OpenAI API key is configured
+        if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'your_openai_api_key_here') {
+          // Detect topic for demo response
+          const topic = this.strategicPrimitives.detectTopic(message);
+          const context = this.strategicPrimitives.getStrategicContext(topic);
+          
+          let demoResponse = `The reality is that I'm currently running in demo mode with limited capabilities.
 
-Here's what's happening: I can still provide you with insights in Rishad's distinctive style, though I won't be able to access the full AI capabilities until the API key is set up.
+Here's what's happening: I can still provide you with insights in Rishad's distinctive style, though I won't be able to access the full AI capabilities until the API key is set up.`;
+
+          if (context) {
+            demoResponse += `
+
+STRATEGIC CONTEXT DETECTED:
+Core Principle: ${context.core_principle}
+Key Frameworks: ${context.key_frameworks.join(', ')}
+
+What most people miss is that even in demo mode, I can demonstrate the kind of thinking and communication style that Rishad Tobaccowala is known for - forward-thinking, practical, and strategically insightful. The key is focusing on actionable insights that create ${context.core_principle.toLowerCase()}.
+
+To get the full AI-powered experience with strategic framework integration, please configure your OpenAI API key in the .env file.`;
+          } else {
+            demoResponse += `
 
 What most people miss is that even in demo mode, I can demonstrate the kind of thinking and communication style that Rishad Tobaccowala is known for - forward-thinking, practical, and strategically insightful. The key is focusing on actionable insights rather than just theoretical concepts.
 
 To get the full AI-powered experience, please configure your OpenAI API key in the .env file.`;
+          }
 
         // Stream the demo response character by character
         for (let i = 0; i < demoResponse.length; i++) {
@@ -446,7 +470,7 @@ To get the full AI-powered experience, please configure your OpenAI API key in t
       }
 
       // Use OpenAI streaming for real responses
-      const systemPrompt = `You are a helpful assistant that can analyze content and provide insights in the style of Rishad Tobaccowala, a legendary advertising and marketing thought leader. 
+      const baseSystemPrompt = `You are a helpful assistant that can analyze content and provide insights in the style of Rishad Tobaccowala, a legendary advertising and marketing thought leader. 
 
 You can:
 1. Analyze content from Rishad's perspective
@@ -456,8 +480,12 @@ You can:
 
 Keep responses conversational, practical, and actionable. Focus on clear, direct insights rather than flowery language. If the user wants to analyze, transform, or get insights, guide them on how to do so.`;
 
+      // Detect topic and enhance system prompt with strategic primitives
+      const topic = this.strategicPrimitives.detectTopic(message);
+      const enhancedSystemPrompt = this.strategicPrimitives.enhanceSystemPrompt(baseSystemPrompt, topic);
+
       const messages = [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: enhancedSystemPrompt },
         ...context,
         { role: 'user', content: message }
       ];
